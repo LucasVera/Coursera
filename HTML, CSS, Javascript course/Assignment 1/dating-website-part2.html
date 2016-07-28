@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Dating Website
+    </title>
+
+    <style>
+        fieldset{
+            background-color:lightyellow;
+            border-color:yellow;
+            border-width:10px;
+            border-style:solid;
+            margin-bottom:10px;
+            width:720px;
+        }
+
+        label{
+            width:180px;
+            display:inline-block;
+            vertical-align:top;
+            text-align:right;
+        }
+
+        textarea{
+            width:360px;
+            height:50px;
+        }
+
+        .labelAutoWidth label{
+            width:auto;
+        }
+
+        .indicatorsCenteredText label{
+            text-align:center;
+        }
+
+        .spanLowIndicator{
+            background-color:red;
+            color:aliceblue;
+            padding-left:5px;
+            padding-right:5px;
+            font-weight:300;
+            vertical-align:top;
+        }
+
+        .spanHighIndicator{
+            background-color:mediumpurple;
+            color:aliceblue;
+            padding-left:5px;
+            padding-right:5px;
+            font-weight:300;
+            vertical-align:top;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <h1>Please Enter Your Details For Our Dating Website!</h1>
+    <form action="http://ihome.ust.hk/~rossiter/cgi-bin/show_everything.php" enctype="multipart/form-data" method="post">
+        <fieldset>
+            <legend>Your Face</legend>
+
+            <label for="file">Your image:</label>
+            <input id="file" name="file" type="file" required/><br /><br />
+
+            <label for="preview">Image preview:</label>
+            <img id="preview" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Your General Details</legend>
+
+            <label for="txtName">Name:</label>
+            <input id="txtName" name="txtName" type="text" required /><br /><br />
+
+            <label class="labelAutoWidth" for="radGender">Gender:</label>
+            <input id="radMale" name="radGender" type="radio" required />Male
+            <input id="radFemale" name="radGender" type="radio" required />Female<br /><br />
+
+            <label for="txtAge">Age:</label>
+            <input id="txtAge" name="txtAge" type="number" required /><br /><br />
+
+            <label for="txtDateOfBirth">Date of birth:</label>
+            <input id="txtDateOfBirth" name="txtDateOfBirth" type="date" /><br /><br />
+
+            <label for="txtColor">Favorite color:</label>
+            <input id="txtColor" name="txtColor" type="color" /><br /><br />
+
+            <label for="selCountry">Country:</label>
+            <select name="selCountry" id="selCountry">
+                <option value="notSelected">[Not selected]</option>
+                <option value="Chile">Chile</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Ecuador">Ecuador</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Peru">Peru</option>
+            </select>
+        </fieldset>
+
+        <fieldset>
+            <legend>Your Indicators</legend>
+
+            <label class="indicatorsCenteredText" for="rangeHeight">Height:</label>
+            <span class="spanLowIndicator">Short</span><input name="rangeHeight" id="rangeHeight" type="range" max="100" min="0" /><span class="spanHighIndicator">Tall</span><br /><br />
+
+            <label class="indicatorsCenteredText" for="rangeSalary">Salary:</label>
+            <span class="spanLowIndicator">Poor</span><input name="rangeSalary" id="rangeSalary" type="range" max="100" min="0" /><span class="spanHighIndicator">Rich</span>
+        </fieldset>
+
+        <fieldset>
+            <legend>Your Contact Information</legend>
+
+            <label for="txtEmail">Email:</label>
+            <input id="txtEmail" name="txtEmail" type="email" /><br /><br />
+
+            <label for="txtMobile">Mobile:</label>
+            <input id="txtMobile" name="txtMobile" type="tel" /><br /><br />
+
+            <label for="txtAddress">Address:</label>
+            <textarea id="txtAddress" name="txtAddress" wrap="soft" ></textarea><br /><br />
+
+            <label class="labelAutoWidth" for="contactMethod">Method to contact you:</label>
+            <input type="checkbox" id="checkBoxEmail" name="contactMethod" />Email
+            <input type="checkbox" id="checkBoxWhatsapp" name="contactMethod" />Whatsapp
+            <input type="checkbox" id="checkBoxInAppChat" name="contactMethod" />In-app chat
+        </fieldset>
+        <br />
+        <input name="btnSubmit" id="btnSubmit" type="submit"  />
+
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>JavaScript Guessing Game</title>
+</head>
+<body>
+    <button style="vertical-align:central;margin:50px;" onclick="do_game()">Start Game</button>
+
+
+    <script>
+
+        var guess_input_text;
+        var guesses = 0;
+		var targetNum = 0;
+        var target = "";
+        var colors = ["aqua", "blue", "green", "indigo", "magenta", "orange", "purple", "red", "white", "yellow" ];
+		var colorStr = colors[0];
+
+        function do_game() {
+            var finished = false;
+            guesses = 0;
+			targetNum = Math.floor(Math.random() * 10);
+			if (targetNum < 0)
+			{
+				targetNum = 0;
+			}
+			
+			if (targetNum > 9)
+			{
+				targetNum=9;
+			}
+			target = colors[targetNum];
+			colorStr = colors[0];
+			for(var i=1 ; i<9 ; i++)
+			{
+				colorStr += ", " + colors[i];
+			}
+			
+            guess_input_text = "I am thinking of one of these colors:\n\n " + colorStr + ".\n\nWhat color am I thinking of?";
+
+            while (!finished)
+			{
+                user_input = prompt(guess_input_text);
+                guesses++;
+                finished = check_guess(user_input, target);
+            }
+
+            if (guess_input_text == "") {
+                var plural = "";
+                if (guesses > 1) {
+                    plural = "es";
+                }
+				document.body.style.backgroundColor = target;
+                confirm("Congratulations! You guessed correctly!\n\nIt took you " + guesses.toString() + " guess" + plural + "\n");
+            }
+            else {
+                alert(guess_input_text);
+            }
+        }
+
+
+        function check_guess(user_input, target) {
+            if (user_input == target) {
+                guess_input_text = "";
+                return true;
+            }
+
+            if (user_input > target) {
+                guess_input_text = "Incorrect! try an alphabetically LOWER color\n\n" + colorStr;
+            }
+
+            if (user_input < target) {
+                guess_input_text = "Incorrect! try an alphabetically HIGHER color\n\n" + colorStr;
+            }
+			
+			var isValidColor = false;
+			for(var i=0 ; i<9 ; i++)
+			{
+				if (colors[i] == user_input)
+				{
+					isValidColor = true;
+				}
+			}
+
+            if (!isValidColor) {
+                guess_input_text = "You have not entered a valid color... Do you want to stop playing?\n\nType stop if you wanna stop playing...\n";
+                guesses--;
+                var result = prompt(guess_input_text);
+                if (result == "stop" || result == "Stop" || result == "STOP") {
+                    guess_input_text = "Game over! the color was " + target + ". You tried to guess " + guesses + " times.\n\nGood luck next time!\n";
+                    return true;
+                }
+                else {
+                    guess_input_text = "I am thinking of one of these colors:\n\n " + colorStr + ".\n\nWhat color am I thinking of?";
+                }
+            }
+
+            return false;
+        }
+
+    </script>
+
+</body>
+</html>
