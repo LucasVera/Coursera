@@ -1,13 +1,45 @@
-
+// LESS
 
 @white: #ffffff;
 @off-white: #eeeeee;
 @lt-gray:#dddddd;
 @indigo:#303f9f;
 @dark-indigo:#1a237e;
+@light-indigo:#7986CB;
 
+@carousel-height: 300px;
 
+/*Mixin*/
+.zero-margin(@pad-up-dn: 0px, @pad-left-right: 0px){
+	margin:0px auto;
+	padding: @pad-up-dn @pad-left-right;
+}
 
+//Define row classes for use in the page
+
+.row-header{
+	/*here we use the mixin that was defined earlier,
+		so all properties defined there will be used here
+	*/
+	.zero-margin();
+}
+
+.row-content{
+	.zero-margin(50px, 0px);
+	border-bottom: 1px ridge;
+	min-height: 400px;
+}
+
+.row-footer{
+	.zero-margin(20px, 0px);
+	background-color: #AfAfAf;
+}
+
+.jumbotron{
+	.zero-margin(70px, 30px);
+	background: @light-indigo;
+	color:floralwhite;
+}
 
 
 
