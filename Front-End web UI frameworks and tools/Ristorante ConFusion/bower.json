@@ -1,0 +1,21 @@
+{
+  "name": "Ristorante ConFusion",
+  "homepage": "https://github.com/LucasVera/Coursera",
+  "authors": [
+    "Lucas Vera <lucazzzv89@gmail.com>"
+  ],
+  "description": "Web For ConFusion ristorante",
+  "main": "index.html",
+  "keywords": [
+    "webdev",
+    "bower",
+    "node",
+    "js"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.6.3"
+  }
+}
