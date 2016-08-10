@@ -1,13 +1,16 @@
 <html lang="en">
 
 <head>
-
-    <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/bootstrap/dist/css/bootstrap.min.js"></script>
-    <script src="bower_components/bootstrap/dist/css/bootstrap-theme.min.js"></script>
+	<!--
+    <link src="bower_components/angular/angular.min.js">
+    <link src="bower_components/bootstrap/dist/css/bootstrap.min.js">
+    <link src="bower_components/bootstrap/dist/css/bootstrap-theme.min.js">
+	-->
 	
-	<style src="bower_components/bootstrap/dist/css/bootstrap.css"></style>
-	<style src="bower_components/bootstrap/dist/css/bootstrap-theme.css"></style>
+	<link href="bower_components/bootstrap/dist/css/bootstrap.min.css"
+		rel="stylesheet">
+	<link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css"
+		rel="stylesheet">
 	
 	<title>titulo test</title>
 
@@ -15,9 +18,75 @@
 
 <body>
 
-	<button class="btn btn-small btn-primary">Button test</button>
+	<span class="btn btn-warning">Button test</span>
 
+	<!--<script src="bower_components/angular/angular.min.js" />-->
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="bower_components/angular/angular.min.js"></script>
 </body>
+
+<!--
+
+	DIRECTIVES:	
+		- son atributos con ng- por ejemplo, ng-app, ng-bind, ng-model, etc
+		- parecido a los atributos que se usaron el bootstrap como el data-*
+		- ng-app directive: se aplica a un tag de html para especificar donde
+			 el documento html se controlara por medio de angularjs
+		- ng-init: se usa para inicializar una variable js o para evaluar una
+			expresion por ejemplo: 
+				<p ng-init="index = 1"></p>
+				<div class="row row-content" ng-init="dish={name'Uthapizza', ...}"></div>
+				en este ejemplo, se creo un objeto js 'dish' con diferentes propiedades
+				(json object)
+		- las expresiones en angular son expresiones en js pero muy sencillas,
+			nada de loops, ifs, etc. por ejemplo, <p>6+5 = {{ 6 + 5 }}</p>. en este
+			ejemplo, en la pagina web se veria 6+5 = 11. Expresiones en angular se denotan
+			por doble {}
+		- cuando se pone un objeto js en doble {}, se muestra es el valor de ese objeto 
+			o propiedad, por ejemplo,
+				<div class="media-body">
+					<h2 class="media-heading">{{dish.name}}</h2>
+					<p>{{dish.description}}</p>
+				</div>
+			en este ejemplo, se muestra el valor de ese miembro del objeto.
+			
+		- ng-model: realiza el binding bidireccional (two-way binding) entre un control
+			de html y algo de datos
+		- ng_repeat: es usado para hacer un loop sobre un objeto js. ejemplo:
+			<ul class="media-list"
+				<li class="media" ng-repeat="dish in dishes">
+				...
+				</li>
+			</ul>
+			(es como un foreach), este ejemplo pondria un li por cada objeto dish
+			en dishes. es util para un listview o algo asi. (template)
+		
+		
+		
+		MODEL-VIEW-CONTROLLER FRAMEWORK:
+		
+		- design pattern: well documented solution (dont reinvent the wheel)
+		- aisla logica del user interface. separa lo que los usuarios ven de la
+			manipulacion de los datos y manejo de validaciones.
+			controller: media entre el view y el model.
+		- Model: maneja el comportamiento y los datos de la aplicacion,
+			responde a requestes para informacion sobre su estado (normalmente
+			desde la vista), responde a cambios de estado.
+		- View: Hace el render de el modelo a un form con el que el usuario pueda
+			interactuar. por lo general, un viewport tiene una correspondencia 1 a 1
+			para mostrar la info en la pantalla (vista)
+		- Controller: recibe informacion de los usuarios (user input) e inicia un proceso
+			que llama diferentes objetos del modelo, y les instruye de hacer acciones
+			basados en ese input, dependiendo de la logica del programa y de la app.
+		
+		MODEL-VIEW-VIEWMODEL:
+		- derivado del MVC tambien se conoce como model-view-binder
+		- el modelo presenta la logica de negocio y los datos. de ahi se va a el viewModel
+			que es una abstracción del view y expone al usuario las propiedades
+			publicas y los comandos y provee the declarated binding entre el view y el viewmodel
+			de manera que el presentation logic esta entre el view y el viewModel
+-->
 
 
 </html>
