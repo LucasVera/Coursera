@@ -86,6 +86,63 @@
 			que es una abstracción del view y expone al usuario las propiedades
 			publicas y los comandos y provee the declarated binding entre el view y el viewmodel
 			de manera que el presentation logic esta entre el view y el viewModel
+			
+			
+		MODULES:
+		- un modulo de angular es una coleccion de:
+			. Controllers
+			. Directives
+			. Filters
+			. Services
+			. Otros
+		- es importante estructurar el codigo, y aqui se vuelve esencial los modulos
+			porque mantienen el codigo organizado y mantenible. para implementar
+			el modulo seria
+				<html ngApp="confusionApp">
+				...
+				<body>
+					...
+					<script>
+						var app = angular.module('confusionApp', []);
+					</script>
+				</body></html>
+		- un controlador de angular es un objeto js que contiene diferentes atributos,
+			propiedades y funciones. Expone variables y funcionalidad a expresiones
+			y directivas. para definir un controlador se usa ng-controller
+				<div class="row row-content"
+					ng-controller="menuController as menuCtrl">
+				</div>
+			esto siginifica que declare un control tipo menuController y trabajelo
+			como menuCtrl (su nombre). Este controlador estara a cargo de el div, entre
+			el opening y closing tag. En js se declara asi:
+				<script>
+					var app = angular.module('confusionApp',[]);
+					app.controller('menuController',function(){
+						// aqui se pueden poner variables, etc.
+					});
+				</script>
+		
+		ANGULAR FILTERS:
+		- permite formatear el valor de una expresion antes de ser mostrado en una pagina
+			no modifican los datos. se pueden usar en view templates, controllers o services
+			angular ya trae algunos predefinidos o se pueden crear custom filters (js)
+				ejemplo: <span class="badge">{{dish.price | currency}}</span>
+			el | currency formatea el numero como dinero y le pone el $. algunos:
+				. uppercase/lowercase
+				. currency
+				. date
+				. filter (filtra datos basado en criteria)
+				. orderBy
+				. json, limitTo, etc...
+		- existe el ng-class directive, que permite añadir una clase a un elemento
+			css sin importar el elemento, osea se puede poner en todo. permite por ejemplo
+			añadir la clase active a un elemento tab de bootstrap
+				
+		
+		
+			
+		
+			
 -->
 
 
