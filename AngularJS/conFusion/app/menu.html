@@ -9,11 +9,13 @@
          content must come *after* these tags -->
     <title>Ristorante Con Fusion: Menu</title>
         <!-- Bootstrap -->
+    <!-- build:css styles/main.css-->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="styles/bootstrap-social.css" rel="stylesheet">
     <link href="styles/mystyles.css" rel="stylesheet">
+    <!-- endbuild -->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -74,106 +76,56 @@
         </div>
     </div>
 
-
+    <!-- build:js scripts/main.js -->
+    <script src="scripts/app.js"></script>
     <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+    <!-- endbuild -->
+
+
     <script>
-        var app = angular.module('confusionApp', []); //2nd parm: empty array for now
-        app.controller('menuController', function(){ //function contains the core for the controller
+      /*
+        -------------- NOTES ABOUT THE COURSE... NOT AN ACTUAL SCRIPT! -----------------
 
-            this.select = function(tabNum){
-                this.tab = tabNum;
-
-                switch(tabNum)
-                {
-                    case 1:
-                        this.filtText = "";
-                        break;
-
-                    case 2:
-                        this.filtText = "appetizer";
-                        break;
-
-                    case 3:
-                        this.filtText = "mains";
-                        break;
-
-                    case 4:
-                        this.filtText = "dessert";
-                        break;
-                }
-            };
-
-            this.isSelected = function(tabNum){
-                return (this.tab === tabNum);
-            };
-
-            this.filtText = '';
-
-/*
-    *** about the === comparator:
-
-    the === compares the two sides without doing any type conversion, that means if the
-    types aren't equal, then it returns false. the == comparer checks if the types
-    aren't equal, if so, it tries to convert them and then does the comparison. for example:
-        '1' == 1 ---> true
-        '1' === 1 --> false
-    aplica lo mismo para otros tipos de datos y objetos.
-*/
-
-            this.tab=1;
-
-            this.dishes=[
-                     {
-                       name:'Uthapizza',
-                       image: 'images/uthapizza.png',
-                       category: 'mains',
-                       label:'Hot',
-                       price:'4.99',
-                       description:'A unique combination of Indian Uthappam (pancake) and Italian pizza, topped with Cerignola olives, ripe vine cherry tomatoes, Vidalia onion, Guntur chillies and Buffalo Paneer.',
-                       comment: ''
-                    },
-                    {
-                       name:'Zucchipakoda',
-                       image: 'images/zucchipakoda.png',
-                       category: 'appetizer',
-                       label:'',
-                       price:'1.99',
-                       description:'Deep fried Zucchini coated with mildly spiced Chickpea flour batter accompanied with a sweet-tangy tamarind sauce',
-                       comment: ''
-                    },
-                    {
-                       name:'Vadonut',
-                       image: 'images/vadonut.png',
-                       category: 'appetizer',
-                       label:'New',
-                       price:'1.99',
-                       description:'A quintessential ConFusion experience, is it a vada or is it a donut?',
-                       comment: ''
-                    },
-                    {
-                       name:'ElaiCheese Cake',
-                       image: 'images/elaicheesecake.png',
-                       category: 'dessert',
-                       label:'',
-                       price:'2.99',
-                       description:'A delectable, semi-sweet New York Style Cheese Cake, with Graham cracker crust and spiced with Indian cardamoms',
-                       comment: ''
-                    }
-                    ]
-        });
-
-
-
-
-        /*
-          - Grunt-Gulp:
+        - Grunt-Gulp:
             se encargan de tareas automatizadas y de cosas muy repetitivas, por ejemplos, 
             recompilar sass y less code, uglificacion (minification + mangling), errores
             en protocolos o errores de js que puedan ser inconvenientes en el futuro.
             Tambien por ejemplo, reducir imagenes de tamaño, automated tests y compilar
             el sitio para deployment al web.
             Para todo esto se usa Grunt-Gulp, permiten automatizar todo esto.
-        */
+
+
+          - gruntFile.js:
+            en este archivo se especifica todos los task y demas cosas que queremos que haga
+            grunt. El file globin
+
+          - JSHint:
+            intellisense para js... en el GruntFile.js se especifican que archivos de js
+            se van a tener en cuenta, ademas de otras opciones
+
+          - Distribution Folder:
+            cuando se va a servir una pag web a un servidor, la idea es hacerlo con la menor
+            cantidad de archivos y que pesen lo menos posible. para esto se genera una
+            carpeta de distribucion. la idea es combinar la carpeta app y la carpeta bower_components
+            para hacerlo bien.
+            la idea es, entonces, copiar los archivos que son esenciales para la pagina web y
+            hacer un rebuild de toda la carpeta de distribucion. estas acciones serian el copy
+            y el clean.
+
+          - Uglification:
+            concatenar, minificar, cssmin, uglify, filerev, usemin. comprime todo para que 
+            ocupe el menor espacio posible
+
+          - Watch:
+            mantiene un watch en ciertos archivos. Cuando estos cambien, corra algunos tasks
+            configurados previamente automaticamente.
+
+          - Connect:
+            inicia un servidor en un puerto especificado y sirve los archivos dentro de algun
+            folder (dist folder), para test. Se puede combinar con watch para recargar la pagina
+            del navegador para ver los cambios.
+
+      */
     </script>
 
 </body>
