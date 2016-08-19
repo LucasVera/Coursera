@@ -28,27 +28,30 @@
 <body>
 
     <div class="container">
-        <div class="row row-content" ng-controller="menuController as menuCtrl">
+        <div class="row row-content" ng-controller="MenuController">
             <div class="col-xs-12">
+              <button ng-click="toggleDetails()" class="btn btn-xs btn-primary pull-right" type="button">
+                {{showDetails ? 'Hide Details' : 'Show Details'}}
+              </button>
 
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" ng-class="{active:menuCtrl.isSelected(1)}">
-                    <a ng-click="menuCtrl.select(1)" aria-controls="all menu"
+                    <li role="presentation" ng-class="{active:isSelected(1)}">
+                    <a ng-click="select(1)" aria-controls="all menu"
                         role="tab">
                         The Menu
                     </a></li>
-                    <li role="presentation" ng-class="{active:menuCtrl.isSelected(2)}">
-                    <a ng-click="menuCtrl.select(2)" aria-controls="appetizers"
+                    <li role="presentation" ng-class="{active:isSelected(2)}">
+                    <a ng-click="select(2)" aria-controls="appetizers"
                         role="tab">
                         Appetizers
                     </a></li>
-                    <li role="presentation" ng-class="{active:menuCtrl.isSelected(3)}">
-                    <a ng-click="menuCtrl.select(3)" aria-controls="mains"
+                    <li role="presentation" ng-class="{active:isSelected(3)}">
+                    <a ng-click="select(3)" aria-controls="mains"
                         role="tab">
                         Mains
                     </a></li>
-                    <li role="presentation" ng-class="{active:menuCtrl.isSelected(4)}">
-                    <a ng-click="menuCtrl.select(4)" aria-controls="desserts"
+                    <li role="presentation" ng-class="{active:isSelected(4)}">
+                    <a ng-click="select(4)" aria-controls="desserts"
                         role="tab">
                         Desserts
                     </a></li>
@@ -56,7 +59,7 @@
 
                 <div class="tab-content">
                     <ul class="media-list tab-pane fade in active">
-                    <li class="media" ng-repeat="dish in menuCtrl.dishes | filter:menuCtrl.filtText">
+                    <li class="media" ng-repeat="dish in dishes | filter:filtText">
                         <div class="media-left media-middle">
                             <a href="#">
                             <img class="media-object img-thumbnail"
@@ -67,7 +70,7 @@
                             <h2 class="media-heading">{{dish.name}}
                              <span class="label label-danger">{{dish.label}}</span>
                              <span class="badge">{{dish.price | currency}}</span></h2>
-                            <p>{{dish.description}}</p>
+                            <p ng-show="showDetails">{{dish.description}}</p>
                         </div>
                     </li>
                     </ul>
@@ -77,14 +80,24 @@
     </div>
 
     <!-- build:js scripts/main.js -->
-    <script src="scripts/app.js"></script>
     <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="scripts/app.js"></script>
     <!-- endbuild -->
 
 
     <script>
       /*
         -------------- NOTES ABOUT THE COURSE... NOT AN ACTUAL SCRIPT! -----------------
+
+    *** about the === comparator:
+
+    the === compares the two sides without doing any type conversion, that means if the
+    types aren't equal, then it returns false. the == comparer checks if the types
+    aren't equal, if so, it tries to convert them and then does the comparison. for example:
+        '1' == 1 ---> true
+        '1' === 1 --> false
+    aplica lo mismo para otros tipos de datos y objetos.
+
 
         - Grunt-Gulp:
             se encargan de tareas automatizadas y de cosas muy repetitivas, por ejemplos, 
@@ -124,6 +137,61 @@
             inicia un servidor en un puerto especificado y sirve los archivos dentro de algun
             folder (dist folder), para test. Se puede combinar con watch para recargar la pagina
             del navegador para ver los cambios.
+
+          - Angular scope:
+            es un objeto que referencia el modelo de la aplicacion. es el core del
+            2-way binding, es decir, es la pega que une el modelo con el controlador
+            de la sgte manera:
+              . el controlador expone propiedades al scope
+              . el view hace bind a las propiedades puestas por el controlador
+              . angular es responsable de mantener las 2 en sync.
+            el scope de mas arriba se llama $rootScope, se crea por angular cuando
+            la app inicia y angular va creando scopes diferentes a medida que
+            atraviesa el DOM. de esta manera, el scope tree y el DOM tree quedan
+            de una manera similar.
+            en el js que tiene el controller, se reemplaza this por $scope y se pone
+            .controller('MenuController',['$scope', function($scope) { ... }]); para
+            definir que se va a usar el scope. ademas, en el html se pueden llamar
+            las funciones sin necesidad de especificar otras cosas. ver codigo arriba
+
+          - ng-Show:
+            se usa asi ng-show="boolean". esto quiere decir que este elemento html
+            se mostrara u ocultara dependiendo de la variable boolean del $scope
+            que se especifique en las comillas.
+
+          - Angular Forms:
+            dado el 2-way binding de angular, usar forms es muy sencillo, y usar
+            validaciones de javascript para los datos tamb se vuelve trivial.
+            lo que se hace es crear un objeto en el js que este dentro del scope
+            y se definen las propiedades del 2-way binding. por ejemplo
+              $scope.feedback = {mychannel="", firstName="", lastName=""}
+            luego, en el html se hace con ng-model:
+              <input type="text" ... ng-model="feedback.firstName">
+            de esta manera, queda el 2-way binding. (controlador y vista).
+
+          - Form Validation:
+            se puede desactivar la validacion de form de html para que sea
+            responsabilidad enteramente de angular. esto se hace en el tag
+            <form> especificando novalidate, asi:
+              <form class="form-horizontal" name="myForm" ng-submit="sendForm()" ... novalidate>
+            el form debe tener un nombre y el ng-submit="func" llamara la funcion
+            especificada cuando se le da al btn submit y ahi se trabajara el submit
+            del form y la info.
+            las validaciones que hace angular se realizan antes de asignar los valores al $scope. algunas directivas de interes:
+              . ng-minlength
+              . ng-maxlength
+              . ng-pattern: can use regex (regular expresion(input matches regular expresion))
+            cuando se nombran los campos y el form, se pueden usar 4 propiedades predeterminadas que trae angular para chequear un par de cosas
+            (se pueden usar en campos individuales, o en todo el form):
+              . $pristine: true si el form no ha sido cambiado
+              . $dirty: opuesto a $pristine
+              . $valid: true si el campo/form es valido
+              . $invalid: opuesto a $valid
+            cuando se encuentra alguna validacion, se pueden usar classes de bootstrap para alertar al usuario y hacerle saber que hay errores y que debe modificar para corregir dichos errores
+              . .has-error, .has-warning, .has-success
+              . .help-block para mostrar un msj abajo del campo.
+              
+
 
       */
     </script>

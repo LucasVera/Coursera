@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="confusionApp">
+
+<head>
+     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head
+         content must come *after* these tags -->
+    <title>Ristorante Con Fusion: Menu</title>
+        <!-- Bootstrap -->
+    <link rel="stylesheet" href="styles/main.b649fa61702b28c83dea.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row row-content" ng-controller="menuController as menuCtrl">
+            <div class="col-xs-12">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" ng-class="{active:menuCtrl.isSelected(1)}">
+                    <a ng-click="menuCtrl.select(1)" aria-controls="all menu"
+                        role="tab">
+                        The Menu
+                    </a></li>
+                    <li role="presentation" ng-class="{active:menuCtrl.isSelected(2)}">
+                    <a ng-click="menuCtrl.select(2)" aria-controls="appetizers"
+                        role="tab">
+                        Appetizers
+                    </a></li>
+                    <li role="presentation" ng-class="{active:menuCtrl.isSelected(3)}">
+                    <a ng-click="menuCtrl.select(3)" aria-controls="mains"
+                        role="tab">
+                        Mains
+                    </a></li>
+                    <li role="presentation" ng-class="{active:menuCtrl.isSelected(4)}">
+                    <a ng-click="menuCtrl.select(4)" aria-controls="desserts"
+                        role="tab">
+                        Desserts
+                    </a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <ul class="media-list tab-pane fade in active">
+                    <li class="media" ng-repeat="dish in menuCtrl.dishes | filter:menuCtrl.filtText">
+                        <div class="media-left media-middle">
+                            <a href="#">
+                            <img class="media-object img-thumbnail"
+                             ng-src={{dish.image}} alt="Uthappizza">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h2 class="media-heading">{{dish.name}}
+                             <span class="label label-danger">{{dish.label}}</span>
+                             <span class="badge">{{dish.price | currency}}</span></h2>
+                            <p>{{dish.description}}</p>
+                        </div>
+                    </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/main.5deb44a5a65ea9cba03d.js"></script>
+
+
+    <script>
+      /*
+        -------------- NOTES ABOUT THE COURSE... NOT AN ACTUAL SCRIPT! -----------------
+
+    *** about the === comparator:
+
+    the === compares the two sides without doing any type conversion, that means if the
+    types aren't equal, then it returns false. the == comparer checks if the types
+    aren't equal, if so, it tries to convert them and then does the comparison. for example:
+        '1' == 1 ---> true
+        '1' === 1 --> false
+    aplica lo mismo para otros tipos de datos y objetos.
+
+
+        - Grunt-Gulp:
+            se encargan de tareas automatizadas y de cosas muy repetitivas, por ejemplos, 
+            recompilar sass y less code, uglificacion (minification + mangling), errores
+            en protocolos o errores de js que puedan ser inconvenientes en el futuro.
+            Tambien por ejemplo, reducir imagenes de tamaño, automated tests y compilar
+            el sitio para deployment al web.
+            Para todo esto se usa Grunt-Gulp, permiten automatizar todo esto.
+
+
+          - gruntFile.js:
+            en este archivo se especifica todos los task y demas cosas que queremos que haga
+            grunt. El file globin
+
+          - JSHint:
+            intellisense para js... en el GruntFile.js se especifican que archivos de js
+            se van a tener en cuenta, ademas de otras opciones
+
+          - Distribution Folder:
+            cuando se va a servir una pag web a un servidor, la idea es hacerlo con la menor
+            cantidad de archivos y que pesen lo menos posible. para esto se genera una
+            carpeta de distribucion. la idea es combinar la carpeta app y la carpeta bower_components
+            para hacerlo bien.
+            la idea es, entonces, copiar los archivos que son esenciales para la pagina web y
+            hacer un rebuild de toda la carpeta de distribucion. estas acciones serian el copy
+            y el clean.
+
+          - Uglification:
+            concatenar, minificar, cssmin, uglify, filerev, usemin. comprime todo para que 
+            ocupe el menor espacio posible
+
+          - Watch:
+            mantiene un watch en ciertos archivos. Cuando estos cambien, corra algunos tasks
+            configurados previamente automaticamente.
+
+          - Connect:
+            inicia un servidor en un puerto especificado y sirve los archivos dentro de algun
+            folder (dist folder), para test. Se puede combinar con watch para recargar la pagina
+            del navegador para ver los cambios.
+
+      */
+    </script>
+
+</body>
+
+</html>
