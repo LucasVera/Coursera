@@ -32,7 +32,7 @@
                     <ul class="media-list tab-pane fade in active">
                     <li class="media" ng-repeat="dish in dishes | filter:filtText">
                         <div class="media-left media-middle">
-                            <a href="#">
+                            <a ui-sref="app.dishdetails({id: dish._id})">
                             <img class="media-object img-thumbnail"
                              ng-src={{dish.image}} alt="Uthappizza">
                             </a>
@@ -231,7 +231,95 @@
             se usa <div ng-include="'menu.html'"></div> o con <ng-include src="'menu.html'"></ng-include>
             esta directiva crea un nuevo scope. Permite incluir un template externo!
             tiene "''"(doble comilla, comilla)
-            
+
+          - Single page applications
+            tradicionalmente, cuando se ingresa a una pagina web, y se navega por ella, el servidor
+            responde con diferentes paginas que se muestran en el navegador y asi. en las SPA, se
+            pide la web application (request web app) y el servidr responde con la web app y los assets
+            cuando el cliente realiza un modificacion, por ejemplo un link, el cliente envia solo
+            esta accion y el servidor responde con JSON para renderizar lo nuevo. esto hace que
+            interactuar con la pagina se vuelva request-response de json (o xml), ya que la carga inicial
+            de la web app se mantendra allí. se ahorra mucho tiempo entre cliente-servidor. hace que
+            el user experience se parezca mas a una app de escritorio.
+            known issues:
+              . Search engines: no es optimizado
+              . particionar responsabilidad entre cliente-servidor: el servidor actua como una base de 
+                datos...
+              . mantener historial (backstack): next/back buttons...
+              . analytics: datos de analyitics
+              . agilizar la carga inicial: descargar muchos recursos...
+
+          - SPAs en Angular
+            angular ya da muchas facilidades para hacer SPAs: data binding, MVW, Views -> templates + controller + model, location y routing.
+            en SPAs, el servidor le da mucha responsabilidad de renderizar al cliente, por esto
+            se vuelve puramente servidor de datos usando REST API. solo suplee los archivos estaticos html, angular templates y recursos.
+            el view se renderzia por completo en el cliente. se usa templating and routing (move
+            from one template to another)
+
+          - Deep linking
+            dado que todo se identifica como un URL, deep linking especifica un link a un contenido
+            web que puede ser buscado o indexado. por ejemplo
+              http://www.conFusion.food/index.html#/menu/0
+            lo que siga despues del # no indica una recarga de la pagina. es decir, si cambia el cliente
+            sabe que no debe recargar la pagina sino buscar el url dentro de ella. esto permite cargar
+            diferentes views sin necesidad de recargar la pagina
+
+          - $location service
+            permite saber el URL actual, observarlo y cambiarlo. sincroniza el URL cuando
+            el usuario cambie el address bar, haga click en back-forward, etc. y tambien permite cambiar
+            la porcion del # de una URL.
+
+          - ngRoute
+            route = la parte del #. routing es mapear el path de una url a un handler para ese route
+            en particular.
+            ngRoute no es parte del core de angular, hay que instalarlo: bower install angular-route -S
+            luego se incluye en la app usando el <script> tag. este tag maneja la interaccion entre
+            el $location service y el view. puede actualizarlo (la parte del #). hay que usar DI
+            en la app. tambien esta $routeProvider, el cual mapea desde los routes a los handlers
+            un handler es un objeto que define el url del template y el controller. el $routeProvider
+            necesita configuracion previa, por lo que se usa el .config que trae angular:
+              angular.module('confusionApp',['ngRoute'])
+                .config(function($routeProvider){
+                    $routeProvider
+                      .when('/menu',{
+                        templateUrl: 'menu.html', controller: 'MenuController'
+                      })
+                      ...
+                });
+            el when se refiere a la parte del #.
+            para navegar entre diferentes views y con parametros (query string), el <a> tag se pone como
+            <a ng-href="#/menu/{{dish._id}}"> de esta manera se vincula el link con la correspondiente
+            pagina. en el controller se llamaria asi:
+              .controller('DishDetailController', ['$scope','$routeParams', 'menuFactory',
+                function($scope, $routeParams, menuFactory){
+                  var dish = menuFactory.getDish(parseInt($routeParams.id, 10));
+                  $scope.dish = dish;
+                }]);
+
+          - ngView
+            trabaja en conjunto con $route service para incluir el template renderizado del current
+            route al main layout. se usa asi:
+              <ng-view></ng-view>
+              <div ng-view></div>
+
+          - UI-Router
+            ng-Route tiene algunas limitaciones, como por ejemplo, solo puede mostrar un view a la vez
+            no se pueden nestear, y las view estan atadas al URL del route. esto a veces es un problema
+            por que se requieren otras cosas. 
+            el ui-router se basa en estados de la app para cambiar las partes del sitio. esto permite
+            hacer cambios en la web sin siquiere cambiar la URL. Esto permite multiples views y
+            nested views.
+            se debe instalar usando bower y hacer DI en el modulo asi:
+              angular.module('confusionApp',['ui.router'])
+            provee un state-Provider y un url-provider. en el config se implementa la funcion .state
+            en vez de .when para especificar cada state que forma parte de la app.
+            para incluirlo en una pagina se pone <div ui-view="header"></div>. para los links se pone
+            <a ui-sref="app.aboutus"></a> el href que le corresponde se hace durante compilacion
+            asi como se tiene $routeParams, tambien se tiene $stateParams;
+              <a ui-sref="app.dishdetails({id: dish._id})">
+
+
+
 
       */
     </script>

@@ -8,11 +8,9 @@ angular.module('confusionApp')
             $scope.filtText = '';
             $scope.showDetails = false;
 
-            // instead of having the data hard coded here, use DI to get the data from the
-            // service (factory defined in the .controller).
-            $scope.dishes = menuFactory.getDishes();
+            $scope.dishes= menuFactory.getDishes();
 
-
+                        
             $scope.select = function(setTab) {
                 $scope.tab = setTab;
                 
@@ -70,13 +68,9 @@ angular.module('confusionApp')
             };
         }])
 
-        .controller('DishDetailController', ['$scope', 'menuFactory', function($scope, menuFactory) {
+        .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
 
-            var testStr = "this is a test";
-            $scope.test=testStr;
-
-            // use service to get data from the service
-            var dish = menuFactory.getDish(3);
+            var dish= menuFactory.getDish(parseInt($stateParams.id,10));
             
             $scope.dish = dish;
             
@@ -84,20 +78,29 @@ angular.module('confusionApp')
 
         .controller('DishCommentController', ['$scope', function($scope) {
             
-            //Step 1: Create a JavaScript object to hold the comment from the form
+            $scope.mycomment = {rating:5, comment:"", author:"", date:""};
             
             $scope.submitComment = function () {
                 
-                //Step 2: This is how you record the date
-                "The date property of your JavaScript object holding the comment" = new Date().toISOString();
+                $scope.mycomment.date = new Date().toISOString();
+                console.log($scope.mycomment);
                 
-                // Step 3: Push your comment into the dish's comment array
-                $scope.dish.comments.push("Your JavaScript Object holding the comment");
+                $scope.dish.comments.push($scope.mycomment);
                 
-                //Step 4: reset your form to pristine
+                $scope.commentForm.$setPristine();
                 
-                //Step 5: reset your JavaScript object that holds your comment
+                $scope.mycomment = {rating:5, comment:"", author:"", date:""};
             }
         }])
+
+        // implement the IndexController and About Controller here
+        .controller('IndexController', ['$scope', function($scope){
+            // do something
+        }])
+
+        .controller('AboutController', ['$scope', function($scope){
+            //do something
+        }])
+
 
 ;
