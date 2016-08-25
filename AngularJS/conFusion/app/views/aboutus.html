@@ -51,11 +51,26 @@
         </div>
 
 
+
+
+
+
+
         <div class="row row-content">
             <div class="col-xs-12 col-sm-9">
                 <h2>Corporate Leadership</h2>
                <ul class="media-list">
-					<h4>Implement the Corporate Leaders List here</h4>
+					<li class="media" ng-repeat="leader in leaders">
+                        <div class="media-left media-middle">
+                            <img class="media-object img-thumbnail" 
+                            ng-src="{{leader.image}}" alt="{{leader.name}}">
+                        </div>
+                        <div class="media-body">
+                            <h3 class="media-heading">{{leader.name}}
+                            <small><span class="text-muted">{{leader.designation}}</span></small></h3>
+                            <p>{{leader.description}}</p>
+                        </div>
+                    </li>
                </ul>
 
             </div>
@@ -63,6 +78,33 @@
                 <p style="padding:20px;"></p>
             </div>
        </div>
+
+       <!--
+
+                    <ul class="media-list tab-pane fade in active">
+                    <li class="media" ng-repeat="dish in dishes | filter:filtText">
+                        <div class="media-left media-middle">
+                            <a ui-sref="app.dishdetails({id: dish._id})">
+                            <img class="media-object img-thumbnail"
+                             ng-src={{dish.image}} alt="Uthappizza">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h2 class="media-heading">{{dish.name}}
+                             <span class="label label-danger">{{dish.label}}</span>
+                             <span class="badge">{{dish.price | currency}}</span></h2>
+                            <p ng-show="showDetails">{{dish.description}}</p>
+                        </div>
+                    </li>
+                    </ul>
+
+       -->
+
+
+
+
+
+
         <div class="row row-content">
             <div class="col-xs-12 col-sm-9">
                 <h2>Facts &amp; Figures</h2>
