@@ -1,6 +1,9 @@
     <div class="container">
         <div class="row row-content" ng-controller="MenuController">
-            <div class="col-xs-12">
+            <div class="col-xs-12" ng-if="!showMenu">            
+              <h3>{{message}}</h3>
+            </div>
+            <div class="col-xs-12" ng-if="showMenu">
               <button ng-click="toggleDetails()" class="btn btn-xs btn-primary pull-right" type="button">
                 {{showDetails ? 'Hide Details' : 'Show Details'}}
               </button>
@@ -32,7 +35,7 @@
                     <ul class="media-list tab-pane fade in active">
                     <li class="media" ng-repeat="dish in dishes | filter:filtText">
                         <div class="media-left media-middle">
-                            <a ui-sref="app.dishdetails({id: dish._id})">
+                            <a ui-sref="app.dishdetails({id: dish.id})">
                             <img class="media-object img-thumbnail"
                              ng-src={{dish.image}} alt="Uthappizza">
                             </a>
@@ -318,7 +321,121 @@
             asi como se tiene $routeParams, tambien se tiene $stateParams;
               <a ui-sref="app.dishdetails({id: dish._id})">
 
+          - Networking:
+            muchas app web tienen un backend cloud: significa que el cloud hosts the backend. es decir,
+            hay que comunicarse con un servidor a traves de un protocolo, por ejemplo, http. y existe
+            algo que se conoce como REST api, que significa representational state transfer. algunos
+            acronimos:
+              . SOAP: se usa encima de http como protocolo de comunicacion distribuido
+              . REST: representational state transfer
+            los códigos de los response de GET o POST de http, son interpretados por el navegador, en 
+            primera instancia no son visibles por la app a menos que se pidan especificamente.
+          
+          - Json Server npm:
+            node.js tiene un paquete que se llama JSon server, el cual es facil de manejar y permite
+            servir datos de una manera simple. se instala de manera global con
+              . npm install json-server -g
+            luego se hace una carpeta aparte json-server donde estará el servidor en esta carpeta se
+            puede poner un archivo json que contenga datos que se quieran servir. por ejemplo, db.json
+            para servir estos datos se hace
+              . json-server --watch db.json
+            o se pone el nombre del archivo json que se quiera servir. como se esta sirviendo y accediendo
+            desde la misma maquina, el le pone localhost:port#, pero si se quiere acceder desde otro 
+            equipo se debe darle un nombre al servidor...
 
+          - $http service
+            es un core service que tiene angular para comunicarse con servidores usando protocolo http
+            a traves de un navegador. es async por naturaleza. usa XMLHttpRequest o JSONP (json with
+            padding) en angular esto se maneja usando promesas, hace un trabajo async y cuando terminan
+            se manejan por un handler/callback que interpreta el resultado o el error. esto porque 
+            las llamadas a servidores son async. esto se hace con
+              . $q service
+            el $http service devuleve una promesa, y se llama asi:
+              . $http({method:'GET', url:'/dishes'}).then(function(){...}, function(){...});
+            la primera funcion que se especifica despues del then es la que se ejecuta si el request
+            es valido, la 2nda funcion se ejecuta si ocurrió un error. existen algunos shortcuts:
+              . $http.get(), $http.put(), ... , $http.jsonp(), etc.
+            ejemplo:
+              . $http.get(baseURL+"dishes").then(
+                  function(response){
+                    $scope.dishes = response.data;
+                    $scope.showMenu = true;
+                  },
+                  function(response){
+                    $scope.message = "Error: " + response.status + " " + response.statusText;
+                  }
+                );
+
+          - ngIf
+            es una angular directive que permite agregar o remover por completo una porcion del DOM
+            a diferencia de ng-show o ng-hide, los cuales solo la ocultaban/revelaban. ejemplo:
+              <div class="col-xs-12" ng-if="!showMenu">
+                <h3>{{message}}<h3>
+              </div>
+            si showMenu es false, significa que esa porción que muestra un mensaje sera removida
+            por completo --> no aparecera y no estara oculta.
+
+          - REST Representational State Transfer
+            sistema diseñado para soportar interoperabilidad entre sistemas conectados a una red
+              . SOA: service-oriented architecture
+              . es una estandarizacion de integrar aplicaciones basadas en web usando estandards
+                de internet.
+            se usan 2 aproches en practica:
+              . SOAP: simple object access protocol: usa WSDL (web services description language)
+                y es XML
+              . REST: usa estandards web, puede usar XML o JSON, y es mas simple comparado
+                con SOAP, WSDL, etc.
+            REST es util porque tiene mucha sinergia con http. tiene 4 principios basicos
+              . Usar metodos http explicitamente
+              . ser stateless
+              . exponer estructuras de directorio tipo URI
+              . usar XML o JSON para transferencias
+            REST captura lo mejor de la web y hace enfasis, osea: URI resources, HTTP protocol,
+            request-response. Tiene capabilidades de HTTP que van mas alla de GET y POST tradicionales
+            en REST, existe una piramide que representa como funciona: son 3 puntas:
+              . Nouns (resources): unconstrained - http://conFusion.food/dishes/123
+              . Verbs: constrained - GET, PUT, POST, DELETE
+              . Representations: constrained - XML, JSON
+            nouns: lo que se quiere, verbs: que se va a hacer, representations: como se va a 
+            representar dichas cosas
+            los verbs se mapean a CRUD:
+              . GET = READ
+              . POST = CREATE
+              . PUT = UPDATE
+              . DELETE = DELETE
+            el servidor es stateless, significa que cada cliente debe saber en que estado esta, 
+            usando cookies, client-side db, etc. y cuando el cliente envía un request, debe
+            enviar tamb el estado en que esta y que quiere hacer.
+
+          - ngResource
+            contiene un nivel de abstraccion mayor que $http para interactuar con un RESTful API
+            server. no es parte del core de angular, entonces para instalar se usa
+              . bower install angular-resource -S
+              . Dependency injection: angular.module('confusionApp', ['ui.router','ngResource'])
+            la idea es usar $resource en vez de $http para realizar CRUD operations.
+              . Dependency injection: .service('menuFactory', ['$resource', 'baseURL',
+                function($resource, baseURL){...}])
+              . Usage: $resource(url, [paramDefaults], [actions], options);
+            trae algunas operaciones preconfiguradas por defecto:
+              . 'get'
+              . 'save'
+              . 'query' (igual a get pero es array)
+              . 'remove'
+              . 'delete' (igual a remove)
+            ejemplo:
+              . $resource(baseURL+"dishes/:id",null, {'update':{method:'PUT'}})
+                  .query(
+                    function(response){
+                      $scope.dishes = response;
+                      $scope.showMenu = true;
+                    },
+                    function(response){
+                      $scope.message = "Error: " + response.status + " " + response.statusText;
+                    });
+            en el ejemplo, notese que se usa el .query() para devolver datos, y ademas, se usan
+            2 funciones para manejar success o failure en el request, igual que en $http, excepto
+            que en la funcion de success, el response son los datos, mientras que en la funcion de
+            failure, si trae toda esa otra info.
 
 
       */
