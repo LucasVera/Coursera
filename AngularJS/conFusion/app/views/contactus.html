@@ -118,6 +118,13 @@
                             <button type="submit" class="btn btn-primary" ng-disabled="feedbackForm.$invalid">Send Feedback</button>
                         </div>
                     </div>
+                    <div class="alert alert-danger" ng-if="showErrorMsg">
+                      <h5><strong>Error</strong> An error has ocurred when trying to save your feedback!</h5>
+                      <h5>{{errorMsg}}</h5>
+                    </div>
+                    <div class="alert alert-success" ng-if="showSuccessMsg && !showErrorMsg">
+                      <h5><strong>Success!</strong> your feedback was saved succesfully!</h5>
+                    </div>
                 </form>
             </div>
              <div class="col-xs-12 col-sm-3">
