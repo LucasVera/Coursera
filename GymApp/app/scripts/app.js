@@ -21,8 +21,8 @@ angular
     $routeProvider
       .when('/', {
         templateUrl: 'views/home.html',
-        controller: 'HomeCtrl',
-        controllerAs: 'home'
+        
+        
       })
       .when('/about', {
         templateUrl: 'views/about.html',
@@ -40,6 +40,6 @@ angular
         controllerAs: 'contact'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/views/404.html'
       });
   });

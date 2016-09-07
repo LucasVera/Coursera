@@ -95,14 +95,11 @@ body {
   padding-bottom: 50px;
 }
 
-.container{
-  padding: 10px;
-}
-
 .container-border{
   border:5px solid gray;
   background: white;
   border-radius: 15px;
+  padding:0px;
 }
 
 .container-border h2{
@@ -112,4 +109,21 @@ body {
   margin-top:0px;
 }
 
+.navbar{
+  background-color: lightgray;
+}
+
+.btn-primary{
+  background-color:slategray;
+  border-color: slategray;
+}
+
+.form-group{
+  padding:10px;
+}
+
+.form-check{
+  padding-bottom: 10px;
+  padding-top:10px;
+}
 

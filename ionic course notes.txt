@@ -1,0 +1,18 @@
+
+- Ionic y angularJS
+	ionic, en el fondo, es una app SPA de angular que usa el UI-Router. Ionic añade sus
+	propios directives y services para diseñar la app. por ejem: $loading, $actionSheet,
+	<ion-list>, <ion-tabs>, etc
+	para la navegación, (views template, back button, etc) se usa <ion-nav-bar>.
+	para definir los templates se usa <ion-view> y tiene un view-title optional para
+	cambiar el titulo dependiendo del template actual.
+	
+
+
+
+
+
+
+
+
+
