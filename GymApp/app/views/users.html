@@ -1,0 +1,18 @@
+<h2>This is the users page.</h2>
+
+<div class="row row-content">
+	<div class="col-xs-12" ng-if="!showUsers">
+		<h3>{{usersMsg}}</h3>
+	</div>
+	<div class="col-xs-12" ng-if="showUsers">
+		<ul class="media-list">
+			<li class="media" ng-repeat="user in users">
+				<div class="media-left media-middle">
+					<img class="media-object img-thumbnail"
+					src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+

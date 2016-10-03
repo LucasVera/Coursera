@@ -85,14 +85,19 @@ body {
   }
 }
 
-/*--------- CUSTOM CSS -----------------*/
+
+/*--------------- 
+                  CUSTOM CSS
+                              -----------------*/
 .light-text{
   color: snow;
 }
 
 .row-content{
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-left:20px;
+  margin-right:20px;
 }
 
 .container-border{

@@ -20,7 +20,7 @@ angular.module('gymApp')
   	};
 
   	$scope.submitLogin = function(){
-      window.alert('paser por aqui');
+      window.alert('pase por aqui');
   		var msg = '';
   		if($scope.loginInfo.email === '')
   		{
