@@ -45,4 +45,39 @@ angular.module('conFusion.services',['ngResource'])
     
         }])
 
+        .factory('favoriteFactory', ['$resource', 'baseURL', function($resource, baseURL){
+            var favFac = {};
+
+            var favorites = [];
+
+            favFac.addToFavorites = function(index){
+              console.log(index);
+              console.log(JSON.stringify(favorites));
+              if (favorites.length <= 0){
+                favorites.push({id: index});
+                return;
+              }
+              for (var i=0 ; i<favorites.length ; i++){
+                if (favorites[i].id == index){
+                  continue;
+                }
+                favorites.push({id: index});
+              }
+            }
+
+            favFac.getFavorites = function(){
+              return favorites;
+            }
+
+            favFac.deleteFromFavorites = function(index){
+              for (var i=0 ; i<favorites.length ; i++){
+                if (favorites[i].id == index){
+                  favorites.splice(i, 1);
+                }
+              }
+            }
+
+            return favFac;
+        }])
+
 ;
