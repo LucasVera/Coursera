@@ -92,6 +92,12 @@
           "author": "2125",
           "comment": "156",
           "date": "2017-03-01T20:45:00.558Z"
+        },
+        {
+          "rating": 54,
+          "author": "111",
+          "comment": "11",
+          "date": "2017-03-02T13:03:44.713Z"
         }
       ]
     },
@@ -101,7 +107,7 @@
       "image": "images/zucchipakoda.png",
       "category": "appetizer",
       "label": "",
-      "price": "1.99",
+      "price": 1.99,
       "description": "Deep fried Zucchini coated with mildly spiced Chickpea flour batter accompanied with a sweet-tangy tamarind sauce",
       "comments": [
         {
@@ -133,6 +139,48 @@
           "comment": "It's your birthday, we're gonna party!",
           "author": "25 Cent",
           "date": "2011-12-02T17:57:28.556094Z"
+        },
+        {
+          "rating": "2",
+          "author": "hola",
+          "comment": "hhh",
+          "date": "2017-03-02T14:07:28.174Z"
+        },
+        {
+          "rating": "2",
+          "author": "55555",
+          "comment": "5555555555555",
+          "date": "2017-03-02T14:09:54.199Z"
+        },
+        {
+          "rating": "3",
+          "comment": "hfhofho",
+          "author": "hola",
+          "date": "2017-03-03T14:37:38.993Z"
+        },
+        {
+          "rating": "4",
+          "comment": "jjjjj",
+          "author": "jj",
+          "date": "2017-03-03T14:39:41.658Z"
+        },
+        {
+          "rating": "3",
+          "comment": "kkkkk",
+          "author": "kkkk",
+          "date": "2017-03-03T14:41:23.151Z"
+        },
+        {
+          "rating": 5000,
+          "author": "kkk",
+          "comment": "kk",
+          "date": "2017-03-03T14:43:53.585Z"
+        },
+        {
+          "rating": 5000,
+          "author": "kkk",
+          "comment": "kk",
+          "date": "2017-03-03T14:43:53.585Z"
         }
       ]
     },
