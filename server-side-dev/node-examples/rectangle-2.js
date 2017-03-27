@@ -1,8 +1,8 @@
-module.exportes = function(b,h,callback){
+module.exports = function(b,h,callback){
 	try{
 		if (b <= 0 || h <= 0)
 		{
-			throw new Error("Rectangle dimensiones should be greater than zero.");
+			throw new Error("Rectangle dimensions should be greater than zero.");
 		}
 		else{
 			callback(null, {
