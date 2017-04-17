@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+var authenticate = require('./authenticate');
 
 var config = require('./config');
 
@@ -37,14 +37,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-var User = require('./models/users');
-app.use(passport.initialize());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.all('*', function(req, res, next){
+  console.log('req start: ', req.secure, req.hostname, req.url, app.get('port'));
+  if (req.secure){
+    return next();
+  }
+  console.log('Redirecting user');
+  res.redirect('https://' + req.hostname + ':' + app.get('secPort') + req.url);
+});
 
 app.use('/', index);
 app.use('/users', users);
@@ -66,29 +68,21 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    res.json({
       message: err.message,
       error: err
     });
   });
 }
 
-app.use(function(err,req,res,next){
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.json({
     message: err.message,
     error: {}
   });
-});
-
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
 });
 
 module.exports = app;

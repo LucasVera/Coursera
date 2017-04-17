@@ -9,8 +9,11 @@ exports.getToken = function(user){
 }
 
 exports.verifyOrdinaryUser = function(req,res,next){
+	console.log('verifyOrdinaryUser');
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-
+	console.log(token);
+	//return next();
+	
 	// decode token
 	if (token){
 		jwt.verify(token, config.secretKey, function(err, decoded){
@@ -36,6 +39,10 @@ exports.verifyOrdinaryUser = function(req,res,next){
 }
 
 exports.verifyAdmin = function(req,res,next){
+	console.log('verifyAdmin');
+
+	//return next();
+
 	if (req.decoded._doc.admin){
 		return next();
 	}

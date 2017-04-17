@@ -4,8 +4,14 @@ var passport = require('passport');
 var User = require('../models/users');
 var Verify = require('./verify');
 
-router.get('/', function(req, res, next){
-	res.send('respond with a resource');
+router.get('/', [Verify.verifyOrdinaryUser, Verify.verifyAdmin], function(req, res, next){
+	User.find({}, function(err, users){
+		if (err){
+			throw err;
+		}
+		console.log('Found users\n' + users);
+		res.json(users);
+	});
 });
 
 router.post('/register', function(req, res){

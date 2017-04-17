@@ -4,8 +4,14 @@ var passport = require('passport');
 var User = require('../models/users');
 var Verify = require('./verify');
 
-router.get('/', function(req, res, next){
-	res.send('respond with a resource');
+router.get('/', [Verify.verifyOrdinaryUser, Verify.verifyAdmin], function(req, res, next){
+	User.find({}, function(err, users){
+		if (err){
+			throw err;
+		}
+		console.log('Found users\n' + users);
+		res.json(users);
+	});
 });
 
 router.post('/register', function(req, res){
@@ -13,8 +19,17 @@ router.post('/register', function(req, res){
 		if (err){
 			return res.status(500).json({err: err});
 		}
-		passport.authenticate('local')(req, res, function(){
-			return res.status(200).json({status: 'Registration Successful!'});
+
+		if (req.body.firstname){
+			user.firstname = req.body.firstname;
+		}
+		if (req.body.lastname){
+			user.lastname = req.body.lastname;
+		}
+		user.save(function(err, user){
+			passport.authenticate('local')(req, res, function(){
+				return res.status(200).json({status: 'Registration Successful!'});
+			});
 		});
 	});
 });
@@ -38,7 +53,7 @@ router.post('/login', function(req, res, next){
 				token: token
 			});
 		});
-	});
+	})(req,res,next);
 });
 
 router.get('/logout', function(req, res){
@@ -46,6 +61,31 @@ router.get('/logout', function(req, res){
 	res.status(200).json({
 		status: 'Bye'
 	});
+});
+
+router.get('/facebook', passport.authenticate('facebook'), function(req,res){
+
+});
+router.get('/facebook/callback', function(err, user, info){
+	passport.authenticate('facebook', function(err, user, info){
+		if (err){
+			return next(err);
+		}
+		if (!user){
+			return res.status(401).json({err:info});
+		}
+		req.logIn(user, function(err){
+			if (err){
+				return res.status(500).json({err:'Could not login user.'});
+			}
+			var token = Verify.getToken(user);
+			res.status(200).json({
+				status: 'Login successful',
+				success: true,
+				token: token
+			});
+		});
+	})(req, res, next);
 });
 
 module.exports = router;
